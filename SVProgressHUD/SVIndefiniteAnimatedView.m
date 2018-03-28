@@ -29,17 +29,21 @@
 - (void)layoutAnimatedLayer {
     UIView *layer = self.indefiniteAnimatedLayer;
     [self addSubview: layer];
-    
-    CGFloat widthDiff = CGRectGetWidth(self.bounds) - CGRectGetWidth(layer.bounds);
-    CGFloat heightDiff = CGRectGetHeight(self.bounds) - CGRectGetHeight(layer.bounds);
-//    layer.position = CGPointMake(CGRectGetWidth(self.bounds) - CGRectGetWidth(layer.bounds) / 2 - widthDiff / 2, CGRectGetHeight(self.bounds) - CGRectGetHeight(layer.bounds) / 2 - heightDiff / 2);
 }
 
 - (UIView*)indefiniteAnimatedLayer {
     if(!_indefiniteAnimatedLayer) {
-        _indefiniteAnimatedLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-        _indefiniteAnimatedLayer.center = self.center
-        _indefiniteAnimatedLayer.backgroundColor = [UIColor redColor]
+        _indefiniteAnimatedLayer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width * 0.5, self.frame.size.height * 0.5)];
+        _indefiniteAnimatedLayer.center = self.center;
+        _indefiniteAnimatedLayer.backgroundColor = [UIColor clearColor];
+        
+        LOTAnimationView *animationView = [LOTAnimationView animationNamed:@"loader"];
+        [animationView setContentMode:UIViewContentModeScaleAspectFill];
+        [animationView setFrame:_indefiniteAnimatedLayer.bounds];
+        [animationView setLoopAnimation:true];
+        [animationView setUserInteractionEnabled:false];
+        [animationView play];
+        [_indefiniteAnimatedLayer addSubview:animationView];
     }
     return _indefiniteAnimatedLayer;
 }
@@ -60,3 +64,4 @@
 }
 
 @end
+

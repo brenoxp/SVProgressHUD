@@ -1204,13 +1204,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
 }
 
 - (UIColor*)backgroundColorForStyle {
-    if(self.defaultStyle == SVProgressHUDStyleLight) {
-        return [UIColor whiteColor];
-    } else if(self.defaultStyle == SVProgressHUDStyleDark) {
-        return [UIColor blackColor];
-    } else {
-        return self.backgroundColor;
-    }
+    return [UIColor clearColor];
 }
 
 - (UIControl*)controlView {
@@ -1401,24 +1395,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     
     - (void)fadeInEffects {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-        if(self.defaultStyle != SVProgressHUDStyleCustom) {
-            // Add blur effect
-            UIBlurEffectStyle blurEffectStyle = self.defaultStyle == SVProgressHUDStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight;
-            UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:blurEffectStyle];
-            self.hudView.effect = blurEffect;
-            
-            // We omit UIVibrancy effect and use a suitable background color as an alternative.
-            // This will make everyting more readable. See the following for details:
-            // https://www.omnigroup.com/developer/how-to-make-text-in-a-uivisualeffectview-readable-on-any-background
-            
-            self.hudView.backgroundColor = [self.backgroundColorForStyle colorWithAlphaComponent:0.6f];
-        } else {
-            self.hudView.backgroundColor =  self.backgroundColorForStyle;
-        }
-#else
-        self.hudView.backgroundColor =  self.backgroundColorForStyle;
-#endif
+        self.hudView.backgroundColor = self.self.backgroundColorForStyle;
         
         // Fade in views
         self.backgroundView.alpha = 1.0f;
@@ -1560,4 +1537,4 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
     }
     
     @end
-
+    
